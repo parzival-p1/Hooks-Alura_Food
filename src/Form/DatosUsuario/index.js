@@ -2,6 +2,21 @@ import React from "react";
 import { TextField, Button, Box } from "@mui/material";
 
 class DatosUsuario extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: {
+        value: 'pacool@mail.com',
+        valid: true
+      },
+      password: {
+        value: 'abc',
+        valid: true
+      }
+    }
+  }
+
   render() {
     return (
       <Box
@@ -13,6 +28,10 @@ class DatosUsuario extends React.Component {
           justifyContent: "center",
           flexDirection: "column",
         }}
+        onSubmit={ (e) => {
+          e.preventDefault();
+          console.log(this.state);
+        }}
       >
         <TextField
           label="Correo electrónico"
@@ -22,6 +41,8 @@ class DatosUsuario extends React.Component {
           type="email"
           error={false}
           helperText={false && "Ingresa un correo electrónico válido"}
+          value={ this.state.email.value }
+          onChange={(input) => this.setState({email: { value: input.target.value}})} 
         />
         <TextField
           label="Contraseña"
@@ -29,6 +50,9 @@ class DatosUsuario extends React.Component {
           fullWidth
           margin="dense"
           type="password"
+          value={ this.state.password.value }
+          onChange={(input) => this.setState({password: { value: input.target.value}})}
+
         />
         <Button variant="contained" type="submit">
           Siguiente
