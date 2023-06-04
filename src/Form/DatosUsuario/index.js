@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import { validarPassword, validarEmail } from "./validaciones"
 
 //^Estructura basica de una Clase
 class ComponenteClase extends React.Component {
@@ -59,8 +60,13 @@ const DatosUsuario = () => {
           error={false}
           helperText={false && "Ingresa un correo electrónico válido"}
           value={ email.value }
-          onChange={ (input) =>
-            setEmail({ value: input.target.value, valid: true })
+          onChange={ (input) => {
+            const email = input.target.value
+
+            //Definiendo las validaciones 1
+            const valido = validarEmail(email)
+            setEmail({ value: email, valid: valido })
+          }
           }
         />
         <TextField
@@ -70,8 +76,12 @@ const DatosUsuario = () => {
           margin="dense"
           type="password"
           value={ password.value }
-          onChange={(input) => 
-              setPassword({ value: input.target.value, valid: true  }) 
+          onChange={(input) => {
+              const password = input.target.value
+
+              // Definiedo las validaciones 2
+              setPassword({ value: password, valid: validarPassword(password) }) 
+            }
           }
         />
         <Button variant="contained" type="submit">
