@@ -11,16 +11,16 @@ class ComponenteClase extends React.Component {
 
 //^Estructura basica de un Componente con arrow func
 const ComponenteFuncion = () => {
-  return <>Contennido</>
+  return <>Contenido</>
 }
 
 const DatosUsuario = () => {
   const [email, setEmail] = useState({ 
-    value: "paco@main.com", 
-    valid: true });
+    value: "", 
+    valid: null });
   const [password, setPassword] = useState({ 
-    value: "abc", 
-    valid: true });
+    value: "", 
+    valid: null });
 
   // constructor(props) {
   //   super(props)
@@ -48,7 +48,12 @@ const DatosUsuario = () => {
         }}
         onSubmit={ (e) => {
           e.preventDefault();
-          console.log(email, password); 
+          if (email.valid && password.valid) {
+            console.log(email, password);
+            console.log("Siguiente formulario");
+          } 
+          else 
+            console.log("No hagas nada!");
         }}
       >
         <TextField
@@ -57,14 +62,15 @@ const DatosUsuario = () => {
           fullWidth
           margin="dense"
           type="email"
-          error={false}
-          helperText={false && "Ingresa un correo electrónico válido"}
+          error={email.valid === false}
+          helperText={
+            email.valid === false && "Ingresa un correo electrónico válido"
+          }
           value={ email.value }
-          onChange={ (input) => {
+          onChange={(input) => {
             const email = input.target.value
-
+            const valido = validarEmail(email);
             //Definiendo las validaciones 1
-            const valido = validarEmail(email)
             setEmail({ value: email, valid: valido })
           }
           }
@@ -75,6 +81,10 @@ const DatosUsuario = () => {
           fullWidth
           margin="dense"
           type="password"
+          error={password.valid === false}
+          helperText={
+            password.valid === false && "Ingresa un password válido, al menos 8 caracteres y máximo 20"
+          }
           value={ password.value }
           onChange={(input) => {
               const password = input.target.value
