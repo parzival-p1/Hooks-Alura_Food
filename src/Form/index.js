@@ -1,13 +1,49 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Stepper, Typography } from "@mui/material";
 import { LogoSpace, FormSpace, Img } from "./styles";
 import DatosUsuario from "./DatosUsuario";
-// import DatosPersonales from "./DatosPersonales";
-// import DatosEntrega from "./DatosEntrega";
-// import Complete from "./Complete";
-// import Stepper from "../Stepper";
+import DatosPersonales from "./DatosPersonales";
+import DatosEntrega from "./DatosEntrega";
+import Complete from "./Complete";
+//import Stepper from "../Stepper";
 
 const Form = () => {
+  const [step, setStep] = useState(2);
+
+      //^ Flux steps
+     // step = 0 --> <DatosUsuario />
+    // step = 1 --> <DatosPersonales />
+   // step = 2 --> <DatosEntrega />
+  // step = 3 --> <Complete />
+
+  //^forma 1 con Switch 
+/*   const selectStep = () => {
+    switch (paso)
+    {
+        case 0: return <DatosUsuario />; break;
+        case 1: return <DatosPersonales />; break;
+        case 2: return <DatosEntrega />; break;
+      default: return <Complete />; break;
+    }
+  } */
+
+  //^forma 2 con Array
+  const steps1 = [
+    <DatosUsuario />,
+    <DatosPersonales />,
+    <DatosEntrega />,
+    <Complete />
+  ]
+
+  //^Forma 3 con unn Object LA MEJOR
+  const steps = {
+    0: <DatosUsuario />,
+    1: <DatosPersonales />,
+    2: <DatosEntrega />,
+    3: <Complete />
+  };
+
+
   return (
     <Box
       sx={{
@@ -21,9 +57,11 @@ const Form = () => {
         <Typography variant="h3">AluraFood</Typography>
       </LogoSpace>
       <FormSpace>
-        <DatosUsuario />
+        {(step < 3) && <Stepper step={step} />}
+        {/* <DatosUsuario /> */}
 {/*         <DatosPersonales />
         <DatosEntrega /> */}
+        {steps[step]} {/* pos = step array */}
       </FormSpace>
     </Box>
   );
