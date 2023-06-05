@@ -1,7 +1,8 @@
 import React from "react";
 import { TextField, Button, Box } from "@mui/material";
 
-const DatosEntrega = () => {
+const DatosEntrega = ({ updateStep }) => {
+  //const { updateStep } = props //* está destruct es == a el param de DatosEntrega
   return (
     <Box
       component="form"
@@ -11,6 +12,10 @@ const DatosEntrega = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+      }}
+      onSubmit= {(e) => {
+        e.preventDefault();
+        updateStep(3)
       }}
     >
       <TextField
