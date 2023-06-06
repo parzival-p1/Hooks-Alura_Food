@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, FormHelperText, Typography } from "@mui/material";
 import { LogoSpace, FormSpace, Img } from "./styles";
 import DatosUsuario from "./DatosUsuario";
 import DatosPersonales from "./DatosPersonales";
 import DatosEntrega from "./DatosEntrega";
 import Complete from "./Complete";
 import Stepper from "../Stepper";
+import Step from "./Step"
+
+//* Validaciones
+import { validarEmail, validarPassword } from "./DatosUsuario/validaciones";
 
 const Form = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
 
       //^ Flux steps
      // step = 0 --> <DatosUsuario />
@@ -40,12 +44,55 @@ const Form = () => {
     <Complete />
   ]
 
-  //^Forma 3 con unn Object LA MEJOR
+  //^Forma 3 con un Object LA MEJOR
   const steps = {
     0: <DatosUsuario updateStep={updateStep}/>,
     1: <DatosPersonales updateStep={updateStep}/>,
     2: <DatosEntrega updateStep={updateStep}/>,
     3: <Complete updateStep={updateStep}/>
+  };
+
+  const onSubmit = () => {};
+
+  const handleChange = (element, position, currentStep, validate) => {
+    const value = element.target.value;
+    const valid = validate(value);
+    console.log(value);
+    console.log(valid);
+    console.log("currentStep: ", currentStep);
+    console.log("positioon: ", position);
+    console.log("validator: ", validate);
+
+    stepsFlow[0].inputs[0].label = "Nombre";
+    console.log(stepsFlow);
+  }
+
+  //^Obj para los input
+  const stepsFlow = {
+    0: {
+      inputs: [ //^arr de inputs
+        {
+          label: "Correo electrónico",
+          type: "email",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          HelperText: "Ingresar un correo válido",
+          validator: validarEmail,
+        },
+        {
+          label: "Contraseña",
+          type: "password",
+          value: "",
+          valid: null,
+          onChange: handleChange,
+          HelperText: "Ingresar una contraseña válida",
+          validator: validarPassword,
+        },
+      ],
+      buttonText: "Siguiente",
+      onSubmit,
+    },
   };
 
 
@@ -63,10 +110,8 @@ const Form = () => {
       </LogoSpace>
       <FormSpace>
         {step < 3 && <Stepper step={step} />}
-        {/* <DatosUsuario /> */}
-{/*         <DatosPersonales />
-        <DatosEntrega /> */}
-        {steps[step]} {/* pos = step array */}
+        {/* {steps[step]} */} {/* pos = step array */}
+        <Step data={ stepsFlow[step] } step={step}/>
       </FormSpace>
     </Box>
   );
