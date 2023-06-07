@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 
 //^Estructura basica de una Clase
-class ComponenteClase extends React.Component {
-    render() {
-        return <>Contenido</>
-    }
-}
+// class ComponenteClase extends React.Component {
+    // render() {
+        // return <>Contenido</>
+    // }
+// }
 
 //^Estructura basica de un Componente con arrow func
 // const ComponenteFuncion = () => {
